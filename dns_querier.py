@@ -1,3 +1,4 @@
+#!/usr/bin/env python'
 
 # A simple DNS querier which takes some inline arguments
 
@@ -19,7 +20,7 @@ parser.add_argument('-t', '--timeout' , default=2, help='query timeout')
 parser.add_argument('-f', '--logfile' , default='1', help='optional logfile')
 
 
-args = parser.parse_args()	
+args = parser.parse_args()
 args = vars(parser.parse_args())
 
 server_dst = args.get('server')
@@ -76,5 +77,6 @@ else:
 			print st +" " + " dns_total_ANSWERED=%d \n" % (total_answered)
 			print st +" " + " dns_total_NOT_ANSWERED=%d \n" % (total_no_answer)
 
-		
+	dns_answer.show()
 
+sys.exit('Error!')
