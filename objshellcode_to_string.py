@@ -38,7 +38,7 @@ for line in new_array:
     final.append(ops)
 
 # print joined string from list
-hex_string = ''.join(final)
-hex_string = hex_string.strip('"')
-hex_string = hex_string.replace('\""','')
-print '"%s"' % (hex_string)
+shellcode = ''.join(final)
+shellcode = shellcode.strip('"')
+shellcode = shellcode.replace('\""','')
+print '"%s"' % (shellcode)
