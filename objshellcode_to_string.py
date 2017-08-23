@@ -23,6 +23,7 @@ for line in array:
     if re.match("^[ ]*[0-9a-f]*:.*$",line):
        line =line.split(":")[1].lstrip()
        new_array.append(line)
+        
 for line in new_array:
     om = line.split("\t")
     # split opcodes
