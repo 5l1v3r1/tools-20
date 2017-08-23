@@ -8,7 +8,7 @@ import subprocess
 try:
     dump = sys.argv[1]
 except IndexError:
-    print "[+] Usage %s <binary_shellcode> " % sys.argv[0]
+    print "[+] Usage %s <binary_assembled_shellcode> " % sys.argv[0]
     sys.exit()
 
 output = subprocess.Popen(['objdump', '-d', dump], stdout=subprocess.PIPE).communicate()[0]
@@ -42,20 +42,15 @@ shellcode = shellcode.replace('"','')
 shellcode = shellcode.replace('\""','')
 shellcode = bytearray.fromhex(shellcode)
 
-print '[*] ORIGINAL SHELLCODE:'
-
 printable_shellcode = ""
-
-for x in bytearray(shellcode) :
-	# XOR Encoding
-	printable_shellcode += '\\x%02x'  % x
-print printable_shellcode + '\n'
-
-
 encoded = ""
 encoded2 = ""
 
+print '\n[*] ORIGINAL SHELLCODE:'
 
+for x in bytearray(shellcode) :
+	printable_shellcode += '\\x%02x'  % x
+print printable_shellcode 
 
 for x in bytearray(shellcode) :
 	# XOR Encoding
@@ -66,9 +61,8 @@ for x in bytearray(shellcode) :
 	encoded2 += '0x'
 	encoded2 += '%02x,' %y
 
-print '\n[*] ENCODED SHELLCODE - format A:'
+print '\n[*] ENCODED SHELLCODE - hexformat A:'
 print encoded
-print '\n[*] ENCODED SHELLCODE - format B:'
+print '\n[*] ENCODED SHELLCODE - hexformat B:'
 print encoded2 
-
 print '\nOriginal Shellcode Len: %d' % len(bytearray(shellcode))
