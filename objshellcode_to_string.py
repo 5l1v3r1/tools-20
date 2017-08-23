@@ -23,14 +23,13 @@ for line in array:
     if re.match("^[ ]*[0-9a-f]*:.*$",line):
        line =line.split(":")[1].lstrip()
        new_array.append(line)
-       
 for line in new_array:
     om = line.split("\t")
     # split opcodes
     op = re.findall("[0-9a-f][0-9a-f]",om[0])
     ops = "\""
     for i in op:
-       ops += "\\x%s" % i
+     ops += "\\x%s" % i
     ops += "\""
     # print opcodes and mnemonics
     ops = ops.ljust(30)
@@ -38,7 +37,6 @@ for line in new_array:
     final.append(ops)
 
 # print joined string from list
-final.pop(2)
 hex_string = ''.join(final)
 hex_string = hex_string.strip('"')
 hex_string = hex_string.replace('\""','')
