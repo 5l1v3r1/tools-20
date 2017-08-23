@@ -1,7 +1,6 @@
 '''
 This script takes a binary assembled shellcode and convert the objdump output to
 as a ready-to-use hex string
-
 '''
 import sys
 import re
@@ -15,6 +14,7 @@ except IndexError:
 
 output = subprocess.Popen(['objdump', '-d', dump], stdout=subprocess.PIPE).communicate()[0]
 array = output.splitlines()
+new_array = []
 final = []
 
 for line in array:
@@ -22,13 +22,15 @@ for line in array:
     # opcodes + mnemonics line?
     if re.match("^[ ]*[0-9a-f]*:.*$",line):
        line =line.split(":")[1].lstrip()
-    # split opcodes and mnemonics
+       new_array.append(line)
+       
+for line in new_array:
     om = line.split("\t")
     # split opcodes
     op = re.findall("[0-9a-f][0-9a-f]",om[0])
     ops = "\""
     for i in op:
-     ops += "\\x%s" % i
+       ops += "\\x%s" % i
     ops += "\""
     # print opcodes and mnemonics
     ops = ops.ljust(30)
@@ -36,6 +38,7 @@ for line in array:
     final.append(ops)
 
 # print joined string from list
+final.pop(2)
 hex_string = ''.join(final)
 hex_string = hex_string.strip('"')
 hex_string = hex_string.replace('\""','')
